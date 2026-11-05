@@ -8,6 +8,7 @@ const legacyFile = (): string => join(app.getPath('userData'), 'events.json') //
 
 export const DEFAULT_SETTINGS: Settings = {
   theme: 'system',
+  accent: 'indigo',
   lang: 'vi',
   sidebarCollapsed: false,
   joinInApp: true,

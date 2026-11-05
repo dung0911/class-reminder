@@ -7,7 +7,7 @@ type Page = 'index' | 'reminder'
 const HEADER_H = 44
 const OVERLAY = {
   dark: { color: '#0b0c1a', symbolColor: '#e5e7f5' },
-  light: { color: '#e8eaf6', symbolColor: '#1c1e3a' }
+  light: { color: '#ffffff', symbolColor: '#1c1e3a' } // khớp --c-bar của giao diện sáng
 }
 
 const webPreferences = (): Electron.WebPreferences => ({

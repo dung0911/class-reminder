@@ -2,6 +2,7 @@ import type { AppData, Attendance, ClassEvent } from '@shared/types'
 import { classStats, listSessions, pad, vnDate, ymd, withAttendance, type SessionInfo, type SessionStatus } from '@shared/schedule'
 import { pendingMakeups, upcomingExams, weekReport } from '@shared/extras'
 import { useNow } from '@/lib/useData'
+import { Gauge, Heatmap, HoursChart, RecentList } from '@/components/DashCharts'
 import { useT } from '@/lib/i18n'
 
 interface Props {
@@ -54,16 +55,41 @@ export default function DashboardPage({ data, update, onSelect }: Props): React.
 
       <div className="flex-1 space-y-4 overflow-y-auto pr-1">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
-          <Card label={t('dash.rate')} value={rate === null ? '—' : `${rate}%`} tone="text-accent" />
-          <Card label={t('status.present')} value={sum('present')} tone="text-ok" />
-          <Card label={t('status.absent')} value={sum('absent')} tone="text-bad" />
-          <Card label={t('status.unmarked')} value={sum('unmarked')} tone="text-warn" />
-          <Card label={t('dash.breaks')} value={sum('breaks')} tone="text-muted" />
+          <Card label={t('dash.rate')} value={rate === null ? '—' : `${rate}%`} tone="text-accent" ring={rate} />
+          <Card label={t('status.present')} value={sum('present')} tone="text-ok" icon="✅" />
+          <Card label={t('status.absent')} value={sum('absent')} tone="text-bad" icon="❌" />
+          <Card label={t('status.unmarked')} value={sum('unmarked')} tone="text-warn" icon="❔" />
+          <Card label={t('dash.breaks')} value={sum('breaks')} tone="text-muted" icon="🌴" />
+        </div>
+
+        <div className="grid gap-3 lg:grid-cols-3">
+          <section className="card p-5 lg:col-span-2">
+            <h2 className="mb-3 text-lg font-bold">🔥 {t('dash.heatmap')}</h2>
+            <Heatmap data={data} now={now} />
+          </section>
+          <section className="card flex flex-col p-5">
+            <h2 className="mb-3 text-lg font-bold">🎯 {t('dash.rate')}</h2>
+            <div className="flex flex-1 flex-col justify-center">
+              <Gauge pct={rate} sub={past ? t('stats.rateSub', { present: sum('present'), past }) : t('recent.none')} />
+            </div>
+          </section>
+        </div>
+
+        <div className="grid gap-3 lg:grid-cols-5">
+          <section className="card p-5 lg:col-span-3">
+            <h2 className="mb-1 text-lg font-bold">📈 {t('dash.hoursChart')}</h2>
+            <p className="mb-3 text-xs text-muted">{t('dash.hoursHint')}</p>
+            <HoursChart data={data} now={now} />
+          </section>
+          <section className="card p-5 lg:col-span-2">
+            <h2 className="mb-3 text-lg font-bold">🕘 {t('dash.recent')}</h2>
+            <RecentList data={data} now={now} onSelect={onSelect} />
+          </section>
         </div>
 
         <div className="grid gap-3 md:grid-cols-2">
           {/* Báo cáo tuần */}
-          <section className="rounded-2xl border border-line bg-panel p-5">
+          <section className="card p-5">
             <div className="mb-2 flex items-baseline gap-2">
               <h2 className="text-lg font-bold">📅 {t('week.title')}</h2>
               <span className="text-xs text-muted">
@@ -88,7 +114,7 @@ export default function DashboardPage({ data, update, onSelect }: Props): React.
           </section>
 
           {/* Đếm ngược kỳ thi */}
-          <section className="rounded-2xl border border-line bg-panel p-5">
+          <section className="card p-5">
             <h2 className="mb-2 text-lg font-bold">🎓 {t('exam.cardTitle')}</h2>
             {exams.length === 0 ? (
               <p className="text-sm text-muted">{hasAnyExam ? t('exam.passed') : t('exam.none')}</p>
@@ -113,7 +139,7 @@ export default function DashboardPage({ data, update, onSelect }: Props): React.
 
         {/* Buổi vắng cần xem bù */}
         {makeups.length > 0 && (
-          <section className="rounded-2xl border border-line bg-panel p-5">
+          <section className="card p-5">
             <h2 className="mb-2 text-lg font-bold text-warn">🎬 {t('makeup.title')} ({makeups.length})</h2>
             <div className="max-h-56 space-y-2 overflow-y-auto pr-1">
               {makeups.map((m) => (
@@ -141,7 +167,7 @@ export default function DashboardPage({ data, update, onSelect }: Props): React.
         {data.events.map((ev) => {
           if (!ev.startDate) {
             return (
-              <section key={ev.id} className="rounded-2xl border border-line bg-panel p-5">
+              <section key={ev.id} className="card p-5">
                 <div className="font-semibold">{ev.title}</div>
                 <p className="text-sm text-muted">{t('dash.noStart')}</p>
               </section>
@@ -154,7 +180,7 @@ export default function DashboardPage({ data, update, onSelect }: Props): React.
           const denom = Math.max(sessions.length, 1)
           const seg = (n: number): string => `${(n / denom) * 100}%`
           return (
-            <section key={ev.id} className="rounded-2xl border border-line bg-panel p-5">
+            <section key={ev.id} className="card p-5">
               <div className="mb-3 flex flex-wrap items-center gap-3">
                 <span className="h-3 w-3 rounded-full" style={{ background: ev.color }} />
                 <h2 className="text-lg font-bold">{ev.title}</h2>
@@ -225,12 +251,41 @@ export default function DashboardPage({ data, update, onSelect }: Props): React.
   )
 }
 
-function Card({ label, value, tone }: { label: string; value: string | number; tone: string }): React.JSX.Element {
+function Card({ label, value, tone, icon, ring }: { label: string; value: string | number; tone: string; icon?: string; ring?: number | null }): React.JSX.Element {
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4">
-      <div className="text-xs text-muted">{label}</div>
-      <div className={`mt-1 text-3xl font-bold ${tone}`}>{value}</div>
+    <div className="card flex items-center gap-3 p-4">
+      {ring !== undefined ? (
+        <Ring pct={ring} />
+      ) : (
+        icon && <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-hover text-lg">{icon}</div>
+      )}
+      <div className="min-w-0">
+        <div className="truncate text-xs font-medium text-muted">{label}</div>
+        <div className={`text-2xl font-bold leading-tight ${tone}`}>{value}</div>
+      </div>
     </div>
+  )
+}
+
+/** Vòng tròn phần trăm (tỉ lệ có mặt) */
+function Ring({ pct }: { pct: number | null }): React.JSX.Element {
+  const r = 18
+  const c = 2 * Math.PI * r
+  return (
+    <svg viewBox="0 0 44 44" className="h-11 w-11 shrink-0 -rotate-90">
+      <circle cx="22" cy="22" r={r} fill="none" stroke="var(--c-hover)" strokeWidth="5" />
+      <circle
+        cx="22"
+        cy="22"
+        r={r}
+        fill="none"
+        stroke="var(--c-accent)"
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeDasharray={c}
+        strokeDashoffset={c * (1 - (pct ?? 0) / 100)}
+      />
+    </svg>
   )
 }
 

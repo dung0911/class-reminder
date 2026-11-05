@@ -91,7 +91,7 @@ export default function AccountsPage({ data, update, onToast }: Props): React.JS
             <input className={`${FIELD} !w-48`} placeholder={t('acc.siteName')} value={site.name} onChange={(e) => setSite({ ...site, name: e.target.value })} />
             <input className={`${FIELD} !w-56`} placeholder={t('acc.siteUrl')} value={site.url} onChange={(e) => setSite({ ...site, url: e.target.value })} />
             <input className={`${FIELD} min-w-48 flex-1`} placeholder={t('acc.siteNote')} value={site.note} onChange={(e) => setSite({ ...site, note: e.target.value })} />
-            <button onClick={addSite} className="rounded-lg bg-accent px-4 text-sm font-semibold text-white hover:opacity-90">
+            <button onClick={addSite} className="rounded-lg btn-accent px-4 text-sm font-semibold text-white hover:opacity-90">
               + {t('common.add')}
             </button>
           </div>
@@ -100,7 +100,7 @@ export default function AccountsPage({ data, update, onToast }: Props): React.JS
             {data.sites.map((s) => {
               const used = data.events.filter((e) => e.siteIds?.includes(s.id))
               return (
-                <div key={s.id} className="flex items-center gap-3 rounded-xl border border-line bg-panel p-4">
+                <div key={s.id} className="flex items-center gap-3 card p-4">
                   <span className="text-2xl">🌐</span>
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold">{s.name}</div>
@@ -148,7 +148,7 @@ export default function AccountsPage({ data, update, onToast }: Props): React.JS
             <button
               onClick={() => setEditing('new')}
               disabled={data.sites.length === 0}
-              className="ml-auto rounded-lg bg-accent px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
+              className="ml-auto rounded-lg btn-accent px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
             >
               + {t('acc.addAccount')}
             </button>
@@ -158,7 +158,7 @@ export default function AccountsPage({ data, update, onToast }: Props): React.JS
             {data.accounts.map((a) => {
               const s = siteOf(a.siteId)
               return (
-                <div key={a.id} className="rounded-xl border border-line bg-panel p-4">
+                <div key={a.id} className="card p-4">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
                     <span className="font-semibold">{s?.name ?? '?'}</span>
                     <span className="text-sm text-soft">
@@ -304,7 +304,7 @@ function AccountDialog({
           <button type="button" onClick={onClose} className="rounded-lg border border-line px-3 py-2 text-sm hover:bg-hover">
             {t('common.cancel')}
           </button>
-          <button type="submit" className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
+          <button type="submit" className="rounded-lg btn-accent px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
             {t('common.save')}
           </button>
         </div>

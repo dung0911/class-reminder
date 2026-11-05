@@ -12,11 +12,12 @@ import DashboardPage from '@/pages/DashboardPage'
 import AccountsPage from '@/pages/AccountsPage'
 import SettingsPage from '@/pages/SettingsPage'
 import TasksPage from '@/pages/TasksPage'
+import QuickAdd from '@/components/QuickAdd'
 import { upcomingExams } from '@shared/extras'
 
 export default function App(): React.JSX.Element | null {
   const { data, update } = useData()
-  useTheme(data?.settings.theme ?? 'system')
+  useTheme(data?.settings.theme ?? 'system', data?.settings.accent)
   if (!data) return null
   return (
     <I18nProvider lang={data.settings.lang}>
@@ -34,6 +35,9 @@ function Shell({ data, update }: ShellProps): React.JSX.Element {
   const t = useT()
   const [page, setPage] = useState<Page>('calendar')
   const [editing, setEditing] = useState<ClassEvent | 'new' | null>(null)
+  const [draft, setDraft] = useState<Partial<ClassEvent> | null>(null) // điền sẵn khi thêm lớp từ ô trống trên lịch
+  const [filter, setFilter] = useState('all') // lớp đang lọc trên trang Lịch
+  const [quick, setQuick] = useState<{ date: Date; hour: number; x: number; y: number } | null>(null) // khung thêm nhanh
   const [session, setSession] = useState<{ id: string; date: Date } | null>(null)
   const [toast, setToast] = useState('')
   const now = useNow(15_000)
@@ -71,14 +75,44 @@ function Shell({ data, update }: ShellProps): React.JSX.Element {
         <Sidebar
           page={page}
           collapsed={data.settings.sidebarCollapsed}
+          tinted={data.settings.sidebarStyle === 'accent'}
+          userName={data.accounts.find((a) => a.fullName)?.fullName ?? ''}
+          classes={data.events.map((e) => ({ id: e.id, title: e.title, color: e.color }))}
+          filter={filter}
+          onPickClass={(id) => {
+            setFilter(filter === id && page === 'calendar' ? 'all' : id)
+            setPage('calendar')
+          }}
           exam={nextExam ? { title: nextExam.title || t('exam.default'), days: nextExam.days } : undefined}
           openTasks={data.tasks.filter((x) => !x.done).length}
           onPage={setPage}
           onToggle={() => setSettings({ sidebarCollapsed: !data.settings.sidebarCollapsed })}
         />
         <main className="min-w-0 flex-1 overflow-hidden p-6">
-          {page === 'calendar' && <CalendarPage data={data} update={update} onSelect={onSelect} onAdd={() => setEditing('new')} />}
-          {page === 'courses' && <CoursesPage data={data} onEdit={setEditing} onAdd={() => setEditing('new')} />}
+          {page === 'calendar' && (
+            <CalendarPage
+              data={data}
+              update={update}
+              filter={filter}
+              onFilter={setFilter}
+              onSelect={onSelect}
+              onAdd={() => {
+                setDraft(null)
+                setEditing('new')
+              }}
+              onSlot={(date, hour, x, y) => setQuick({ date, hour, x, y })}
+            />
+          )}
+          {page === 'courses' && (
+            <CoursesPage
+              data={data}
+              onEdit={setEditing}
+              onAdd={() => {
+                setDraft(null)
+                setEditing('new')
+              }}
+            />
+          )}
           {page === 'tasks' && <TasksPage data={data} update={update} onToast={showToast} />}
           {page === 'dashboard' && <DashboardPage data={data} update={update} onSelect={onSelect} />}
           {page === 'accounts' && <AccountsPage data={data} update={update} onToast={showToast} />}
@@ -100,9 +134,30 @@ function Shell({ data, update }: ShellProps): React.JSX.Element {
         />
       )}
 
+      {quick && (
+        <QuickAdd
+          date={quick.date}
+          hour={quick.hour}
+          x={quick.x}
+          y={quick.y}
+          onSave={(ev) => {
+            saveEvent(ev)
+            setQuick(null)
+            showToast(t('quick.saved', { title: ev.title }))
+          }}
+          onMore={(d) => {
+            setDraft(d)
+            setQuick(null)
+            setEditing('new')
+          }}
+          onClose={() => setQuick(null)}
+        />
+      )}
+
       {editing && (
         <ClassDialog
           initial={editing === 'new' ? null : editing}
+          draft={editing === 'new' ? draft : null}
           sites={data.sites}
           onSave={(ev) => {
             saveEvent(ev)

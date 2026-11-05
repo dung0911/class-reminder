@@ -2,24 +2,30 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Bảng màu sáng (mặc định). Chế độ tối ghi đè ở .dark bên dưới. */
+/* ============================================================
+   Bảng màu. Sáng là mặc định, chế độ tối ghi đè ở .dark.
+   Màu nhấn đổi được: <html data-accent="blue|purple|green|rose">.
+   ============================================================ */
 :root {
-  --c-bg: #f3f4fb;
-  --c-bg-grad: linear-gradient(135deg, #f6f7fd 0%, #eceefb 60%, #e4e6fa 100%);
-  --c-bar: #e8eaf6;
-  --c-side: #ffffff;
+  --c-bg: #f4f5fa;
+  --c-bg-grad: linear-gradient(180deg, #f7f8fc 0%, #eceef8 100%);
+  --c-bar: #ffffff;
+  --c-side: #fbfbfe;
   --c-panel: #ffffff;
-  --c-line: rgba(40, 45, 110, 0.14);
-  --c-ink: #1a1c38;
-  --c-soft: #3c4070;
-  --c-muted: #6a6f9a;
-  --c-field: #f0f1fa;
-  --c-hover: rgba(70, 80, 190, 0.09);
+  --c-card: #ffffff; /* nền gốc để pha màu pastel cho thẻ buổi học */
+  --c-line: rgba(30, 36, 90, 0.1);
+  --c-ink: #161a3a;
+  --c-soft: #3a3f6e;
+  --c-muted: #7377a3;
+  --c-field: #f1f2f9;
+  --c-hover: rgba(60, 70, 170, 0.07);
+  --c-hatch: rgba(30, 36, 90, 0.05);
   --c-accent: #5558ee;
-  --c-accent-soft: rgba(85, 88, 238, 0.14);
   --c-ok: #0f9d6b;
   --c-bad: #dc3a4a;
   --c-warn: #c27a06;
+  --c-shadow: 0 1px 2px rgba(20, 24, 70, 0.04), 0 12px 28px -16px rgba(20, 24, 70, 0.2);
+  --c-accent-soft: color-mix(in srgb, var(--c-accent) 13%, transparent);
 }
 
 .dark {
@@ -28,24 +34,39 @@
   --c-bar: #0b0c1a;
   --c-side: rgba(0, 0, 0, 0.22);
   --c-panel: rgba(255, 255, 255, 0.05);
+  --c-card: #14153a;
   --c-line: rgba(255, 255, 255, 0.1);
   --c-ink: #eceefb;
   --c-soft: #c3c7e6;
   --c-muted: #8a8fb8;
   --c-field: rgba(0, 0, 0, 0.3);
   --c-hover: rgba(255, 255, 255, 0.08);
+  --c-hatch: rgba(255, 255, 255, 0.035);
   --c-accent: #6366f1;
-  --c-accent-soft: rgba(99, 102, 241, 0.22);
   --c-ok: #34d399;
   --c-bad: #fb7185;
   --c-warn: #fbbf24;
+  --c-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 14px 30px -18px rgba(0, 0, 0, 0.7);
+  --c-accent-soft: color-mix(in srgb, var(--c-accent) 24%, transparent);
 }
+
+/* Màu thương hiệu = màu nhấn ở gốc; giữ riêng để thanh bên (đã đổi --c-accent) vẫn dùng được màu gốc */
+:root { --c-brand: var(--c-accent); }
+:root[data-accent='blue'] { --c-accent: #2f7de1; }
+:root[data-accent='purple'] { --c-accent: #8052e8; }
+:root[data-accent='green'] { --c-accent: #14a360; }
+:root[data-accent='rose'] { --c-accent: #e0356f; }
+.dark[data-accent='blue'] { --c-accent: #4d94f0; }
+.dark[data-accent='purple'] { --c-accent: #9a73f2; }
+.dark[data-accent='green'] { --c-accent: #2dc785; }
+.dark[data-accent='rose'] { --c-accent: #f0558a; }
 
 @theme inline {
   --color-bg: var(--c-bg);
   --color-bar: var(--c-bar);
   --color-side: var(--c-side);
   --color-panel: var(--c-panel);
+  --color-card: var(--c-card);
   --color-line: var(--c-line);
   --color-ink: var(--c-ink);
   --color-soft: var(--c-soft);
@@ -67,7 +88,7 @@ body,
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', 'Yu Gothic UI', 'Meiryo UI', system-ui, sans-serif;
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', 'Yu Gothic UI', 'Meiryo UI', system-ui, sans-serif;
   background: var(--c-bg);
   color: var(--c-ink);
   -webkit-font-smoothing: antialiased;
@@ -90,6 +111,96 @@ textarea {
   -webkit-app-region: no-drag;
 }
 
+/* Thẻ nền chung: viền mảnh, bóng mềm */
+@utility card {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 1rem;
+  box-shadow: var(--c-shadow);
+}
+
+/* Nút chính có chuyển sắc nhẹ theo màu nhấn */
+@utility btn-accent {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-accent) 88%, white) 0%, var(--c-accent) 100%);
+  color: #fff;
+  box-shadow: 0 6px 16px -8px var(--c-accent);
+}
+
+/* Ô phân đoạn (Ngày | Tuần | Tháng, sáng/tối...) */
+@utility seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 0.75rem;
+  background: var(--c-hover);
+}
+
+/* Cuối tuần kẻ sọc nhẹ */
+@utility hatch {
+  background-image: repeating-linear-gradient(135deg, transparent 0 6px, var(--c-hatch) 6px 7px);
+}
+
+/* Thẻ buổi học pastel: màu lớp đặt qua biến --ec trên chính phần tử */
+.evt {
+  background: color-mix(in srgb, var(--ec) 14%, var(--c-card));
+  border: 1px solid color-mix(in srgb, var(--ec) 32%, transparent);
+  color: color-mix(in srgb, var(--ec) 70%, var(--c-ink));
+  border-radius: 10px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.evt:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -10px color-mix(in srgb, var(--ec) 70%, transparent);
+}
+.evt-head {
+  background: color-mix(in srgb, var(--ec) 24%, var(--c-card));
+  border-bottom: 1px dashed color-mix(in srgb, var(--ec) 50%, transparent);
+  border-radius: 9px 9px 0 0;
+}
+/* Chế độ tối: pha sáng hơn để chữ trên thẻ dễ đọc, kể cả với màu lớp tối */
+.dark .evt {
+  background: color-mix(in srgb, var(--ec) 24%, var(--c-card));
+  border-color: color-mix(in srgb, var(--ec) 45%, transparent);
+  color: color-mix(in srgb, var(--ec) 22%, var(--c-ink));
+}
+.dark .evt-head {
+  background: color-mix(in srgb, var(--ec) 36%, var(--c-card));
+}
+.evt-live {
+  box-shadow: 0 0 0 2px var(--ec), 0 10px 22px -10px var(--ec);
+}
+.evt-break {
+  background: transparent;
+  border: 1px dashed var(--c-muted);
+  color: var(--c-muted);
+}
+
+/* Thanh bên đổ màu chuyển sắc theo màu nhấn (kiểu Virtual Dashboard): đổi biến màu ngay trong thanh bên
+   để chữ, viền, nút đều tự thành chữ trắng trên nền màu. */
+.sb-accent {
+  --c-ink: #ffffff;
+  --c-soft: rgba(255, 255, 255, 0.9);
+  --c-muted: rgba(255, 255, 255, 0.66);
+  --c-line: rgba(255, 255, 255, 0.2);
+  --c-hover: rgba(255, 255, 255, 0.15);
+  --c-panel: rgba(255, 255, 255, 0.13);
+  --c-card: rgba(255, 255, 255, 0.16);
+  --c-accent: #ffffff;
+  --c-accent-soft: rgba(255, 255, 255, 0.22);
+  --c-ok: #8bffc8;
+  --c-shadow: none;
+  background: linear-gradient(170deg, var(--c-brand) 0%, color-mix(in srgb, var(--c-brand) 55%, #1b1160) 100%);
+  border-right-color: transparent;
+}
+.sb-accent .btn-accent {
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+  box-shadow: none;
+}
+.sb-accent ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* thanh cuộn theo giao diện */
 ::-webkit-scrollbar {
   width: 10px;
@@ -99,12 +210,16 @@ textarea {
   background: var(--c-line);
   border-radius: 8px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-muted);
+}
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
 /* ô nhập ngày/giờ theo màu giao diện */
 .dark input[type='date'],
-.dark input[type='time'] {
+.dark input[type='time'],
+.dark input[type='datetime-local'] {
   color-scheme: dark;
 }

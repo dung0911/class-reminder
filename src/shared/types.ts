@@ -131,8 +131,14 @@ export interface Account {
 
 export type ThemeMode = 'system' | 'dark' | 'light'
 
+/** Màu nhấn của giao diện */
+export type Accent = 'indigo' | 'blue' | 'purple' | 'green' | 'rose'
+
 export interface Settings {
   theme: ThemeMode
+  accent: Accent
+  /** Thanh bên: 'plain' = nền thường, 'accent' = đổ màu chuyển sắc theo màu nhấn */
+  sidebarStyle?: 'plain' | 'accent'
   /** mã ngôn ngữ: vi, en, ja, hoặc file tự thêm */
   lang: string
   sidebarCollapsed: boolean

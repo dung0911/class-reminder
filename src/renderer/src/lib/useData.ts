@@ -41,7 +41,7 @@ export function useNow(ms = 30_000): Date {
 }
 
 /** Áp chế độ sáng/tối cho cả trang (và cho 3 nút cửa sổ). 'system' theo Windows. */
-export function useTheme(mode: 'system' | 'dark' | 'light'): 'dark' | 'light' {
+export function useTheme(mode: 'system' | 'dark' | 'light', accent: string = 'indigo'): 'dark' | 'light' {
   const query = '(prefers-color-scheme: dark)'
   const [systemDark, setSystemDark] = useState(() => window.matchMedia(query).matches)
   useEffect(() => {
@@ -50,6 +50,9 @@ export function useTheme(mode: 'system' | 'dark' | 'light'): 'dark' | 'light' {
     mq.addEventListener('change', on)
     return () => mq.removeEventListener('change', on)
   }, [])
+  useEffect(() => {
+    document.documentElement.dataset.accent = accent
+  }, [accent])
   const theme = mode === 'system' ? (systemDark ? 'dark' : 'light') : mode
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')

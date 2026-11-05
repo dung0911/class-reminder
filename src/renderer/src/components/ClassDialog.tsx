@@ -6,6 +6,8 @@ import { useT } from '@/lib/i18n'
 
 interface Props {
   initial: ClassEvent | null
+  /** Giá trị điền sẵn khi thêm lớp mới (ví dụ bấm vào ô trống trên lịch: đúng thứ và giờ đó) */
+  draft?: Partial<ClassEvent> | null
   sites: Site[]
   onSave: (ev: ClassEvent) => void
   onDelete: (id: string) => void
@@ -29,9 +31,9 @@ const BLANK: ClassEvent = {
 
 const label = 'text-xs text-muted'
 
-export default function ClassDialog({ initial, sites, onSave, onDelete, onClose }: Props): React.JSX.Element {
+export default function ClassDialog({ initial, draft, sites, onSave, onDelete, onClose }: Props): React.JSX.Element {
   const t = useT()
-  const [ev, setEv] = useState<ClassEvent>(initial ?? { ...BLANK, id: `ev${Date.now()}` })
+  const [ev, setEv] = useState<ClassEvent>(initial ?? { ...BLANK, ...draft, id: `ev${Date.now()}` })
   const set = <K extends keyof ClassEvent>(k: K, v: ClassEvent[K]): void => setEv((p) => ({ ...p, [k]: v }))
   const toggle = <T,>(list: T[], v: T): T[] => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v])
   const valid = ev.title.trim() !== '' && ev.days.length > 0
@@ -58,7 +60,7 @@ export default function ClassDialog({ initial, sites, onSave, onDelete, onClose 
           e.preventDefault()
           if (valid) onSave({ ...ev, title: ev.title.trim(), url: ev.url.trim() })
         }}
-        className="flex max-h-[92vh] w-[520px] flex-col gap-4 overflow-y-auto rounded-2xl border border-line bg-bar p-6 shadow-2xl"
+        className="flex max-h-[92vh] w-[540px] flex-col gap-4 overflow-y-auto rounded-2xl border border-line bg-bar p-6 shadow-2xl"
       >
         <h3 className="text-xl font-bold">{initial ? t('dialog.editTitle') : t('dialog.addTitle')}</h3>
 
@@ -232,7 +234,7 @@ export default function ClassDialog({ initial, sites, onSave, onDelete, onClose 
           <button
             type="submit"
             disabled={!valid}
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
+            className="rounded-lg btn-accent px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
           >
             {t('common.save')}
           </button>

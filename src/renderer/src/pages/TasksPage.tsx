@@ -62,7 +62,7 @@ export default function TasksPage({ data, update, onToast }: Props): React.JSX.E
     const cls = data.events.find((e) => e.id === x.eventId)
     const late = !!x.due && !x.done && x.due < nowKey
     return (
-      <div className="flex items-center gap-3 rounded-xl border border-line bg-panel p-3">
+      <div className="flex items-center gap-3 card p-3">
         <input type="checkbox" className="h-5 w-5 shrink-0" checked={x.done} onChange={(e) => patch(x.id, { done: e.target.checked })} />
         <div className="min-w-0 flex-1">
           <div className={`font-medium ${x.done ? 'text-muted line-through' : ''}`}>{x.title}</div>
@@ -119,7 +119,7 @@ export default function TasksPage({ data, update, onToast }: Props): React.JSX.E
         </button>
       </header>
 
-      <div className="mb-4 flex flex-wrap gap-2 rounded-2xl border border-line bg-panel p-3">
+      <div className="mb-4 flex flex-wrap gap-2 card p-3">
         <input className={`${FIELD} min-w-56 flex-1`} placeholder={t('tasks.titlePh')} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} onKeyDown={(e) => e.key === 'Enter' && add()} />
         <input type="datetime-local" className={`${FIELD} !w-52`} value={form.due} onChange={(e) => setForm({ ...form, due: e.target.value })} />
         <select className={`${FIELD} !w-48`} value={form.eventId} onChange={(e) => setForm({ ...form, eventId: e.target.value })}>
@@ -131,7 +131,7 @@ export default function TasksPage({ data, update, onToast }: Props): React.JSX.E
           ))}
         </select>
         <input className={`${FIELD} min-w-48 flex-1`} placeholder={t('tasks.urlPh')} value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} />
-        <button onClick={add} className="rounded-lg bg-accent px-4 text-sm font-semibold text-white hover:opacity-90">
+        <button onClick={add} className="rounded-lg btn-accent px-4 text-sm font-semibold text-white hover:opacity-90">
           + {t('common.add')}
         </button>
       </div>

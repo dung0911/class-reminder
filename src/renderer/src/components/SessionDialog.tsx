@@ -167,7 +167,7 @@ export default function SessionDialog({ ev, date, now, update, onEdit, onClose }
                 void window.api.join(ev)
                 onClose()
               }}
-              className="rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-white hover:opacity-90"
+              className="rounded-lg btn-accent px-3 py-2 text-sm font-semibold text-white hover:opacity-90"
             >
               ▶ {t('panel.join')}
             </button>

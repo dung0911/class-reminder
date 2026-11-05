@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { AppData, GoogleStatus, ThemeMode } from '@shared/types'
+import type { Accent, AppData, GoogleStatus, ThemeMode } from '@shared/types'
 import { FIELD } from '@/lib/constants'
 import { useI18n } from '@/lib/i18n'
 
@@ -9,6 +9,13 @@ interface Props {
   onToast: (msg: string) => void
 }
 
+const ACCENTS: { id: Accent; color: string }[] = [
+  { id: 'indigo', color: '#5558ee' },
+  { id: 'blue', color: '#2f7de1' },
+  { id: 'purple', color: '#8052e8' },
+  { id: 'green', color: '#14a360' },
+  { id: 'rose', color: '#e0356f' }
+]
 const THEMES: ThemeMode[] = ['system', 'light', 'dark']
 const ICON: Record<ThemeMode, string> = { system: '🖥️', light: '☀️', dark: '🌙' }
 
@@ -53,7 +60,7 @@ export default function SettingsPage({ data, update, onToast }: Props): React.JS
   const set = (patch: Partial<AppData['settings']>): void =>
     update((d) => ({ ...d, settings: { ...d.settings, ...patch } }))
 
-  const card = 'mb-4 rounded-2xl border border-line bg-panel p-5'
+  const card = 'mb-4 card p-5'
   return (
     <div className="mx-auto h-full max-w-2xl overflow-y-auto pr-1">
       <h1 className="mb-5 text-3xl font-bold">{t('settings.title')}</h1>
@@ -72,6 +79,38 @@ export default function SettingsPage({ data, update, onToast }: Props): React.JS
               {ICON[m]} {t(`theme.${m}`)}
             </button>
           ))}
+        </div>
+      </section>
+
+      <section className={card}>
+        <div className="mb-3 font-semibold">🎨 {t('settings.accent')}</div>
+        <div className="flex flex-wrap gap-3">
+          {ACCENTS.map((a) => {
+            const on = (data.settings.accent ?? 'indigo') === a.id
+            return (
+              <button
+                key={a.id}
+                onClick={() => set({ accent: a.id })}
+                title={t(`accent.${a.id}`)}
+                className={`flex flex-col items-center gap-1.5 rounded-xl px-3 py-2 text-xs transition ${
+                  on ? 'bg-hover font-semibold text-ink' : 'text-muted hover:bg-hover'
+                }`}
+              >
+                <span
+                  className={`flex h-9 w-9 items-center justify-center rounded-full text-white shadow ${on ? 'ring-2 ring-offset-2 ring-offset-transparent' : ''}`}
+                  style={{ background: a.color, ['--tw-ring-color' as string]: a.color }}
+                >
+                  {on ? '✓' : ''}
+                </span>
+                {t(`accent.${a.id}`)}
+              </button>
+            )
+          })}
+        </div>
+        <div className="mt-2 border-t border-line pt-2">
+          {toggle(t('settings.sidebarAccent'), t('settings.sidebarAccentHint'), data.settings.sidebarStyle === 'accent', (v) =>
+            set({ sidebarStyle: v ? 'accent' : 'plain' })
+          )}
         </div>
       </section>
 

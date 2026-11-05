@@ -230,3 +230,156 @@ export function weekReport(data: AppData, now: Date = new Date()): WeekReport {
   }
   return r
 }
+
+// ---------- Thống kê hiển thị (dải số liệu, bản đồ nhiệt, biểu đồ giờ học, bảng buổi gần đây) ----------
+
+const dayStart = (d: Date): Date => new Date(d.getFullYear(), d.getMonth(), d.getDate())
+const addD = (d: Date, n: number): Date => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n)
+const mondayOf = (d: Date): Date => addD(d, -((d.getDay() + 6) % 7))
+
+/** Số buổi và số phút học của một tuần bắt đầu từ `monday` (không tính buổi nghỉ) */
+function weekLoad(data: AppData, monday: Date): { sessions: number; minutes: number; attendedMinutes: number } {
+  let sessions = 0
+  let minutes = 0
+  let attendedMinutes = 0
+  for (const ev of data.events) {
+    if (!ev.enabled) continue
+    for (let i = 0; i < 7; i++) {
+      const d = addD(monday, i)
+      if (!occursOn(ev, d)) continue
+      sessions++
+      minutes += ev.duration
+      if (ev.attendance?.[ymd(d)] === 'present') attendedMinutes += ev.duration
+    }
+  }
+  return { sessions, minutes, attendedMinutes }
+}
+
+export interface CalendarStats {
+  sessions: number
+  sessionsPrev: number
+  hours: number
+  hoursPrev: number
+  /** Tỉ lệ có mặt trên các buổi đã qua, 0..100; null nếu chưa có buổi nào */
+  rate: number | null
+  present: number
+  past: number
+  tasksOpen: number
+  tasksOverdue: number
+}
+
+/** Số liệu cho dải thống kê phía trên lịch */
+export function calendarStats(data: AppData, now: Date = new Date()): CalendarStats {
+  const mon = mondayOf(now)
+  const cur = weekLoad(data, mon)
+  const prev = weekLoad(data, addD(mon, -7))
+  let present = 0
+  let past = 0
+  for (const ev of data.events) {
+    for (const s of listSessions(ev, now)) {
+      if (s.status === 'present' || s.status === 'absent' || s.status === 'unmarked') past++
+      if (s.status === 'present') present++
+    }
+  }
+  const open = data.tasks.filter((t) => !t.done)
+  return {
+    sessions: cur.sessions,
+    sessionsPrev: prev.sessions,
+    hours: Math.round((cur.minutes / 60) * 10) / 10,
+    hoursPrev: Math.round((prev.minutes / 60) * 10) / 10,
+    rate: past ? Math.round((present / past) * 100) : null,
+    present,
+    past,
+    tasksOpen: open.length,
+    tasksOverdue: open.filter((t) => t.due && new Date(t.due) < now).length
+  }
+}
+
+/** Số buổi học trong một ngày (không tính nghỉ) trên các lớp đang bật; breakDay = có lớp nghỉ ngày đó */
+export function dayCount(events: ClassEvent[], d: Date): { count: number; breakDay: boolean } {
+  let count = 0
+  let breakDay = false
+  for (const ev of events) {
+    if (occursOn(ev, d)) count++
+    else if (breakOn(ev, d)) breakDay = true
+  }
+  return { count, breakDay }
+}
+
+export type HeatStatus = 'present' | 'absent' | 'unmarked' | 'upcoming' | 'break'
+
+export interface HeatCell {
+  date: Date
+  status: HeatStatus | null
+  /** Mô tả ngắn để hiện khi rê chuột */
+  tip: string
+}
+
+/** Lưới bản đồ nhiệt: `weeks` cột (mỗi cột Thứ 2 → CN), bắt đầu từ tuần sớm nhất có lớp (tối đa ~5 tháng trước) */
+export function heatmapWeeks(data: AppData, now: Date = new Date(), weeks = 30): HeatCell[][] {
+  const starts = data.events.map((e) => e.startDate).filter((s): s is string => !!s).sort()
+  const earliest = starts.length ? new Date(`${starts[0]}T00:00:00`) : addD(now, -7 * 8)
+  const floor = addD(mondayOf(now), -7 * 20)
+  const first = mondayOf(earliest < floor ? floor : earliest)
+  const today = dayStart(now)
+  const out: HeatCell[][] = []
+  for (let w = 0; w < weeks; w++) {
+    const col: HeatCell[] = []
+    for (let i = 0; i < 7; i++) {
+      const d = addD(first, w * 7 + i)
+      const bits: { status: HeatStatus; title: string }[] = []
+      for (const ev of data.events) {
+        if (breakOn(ev, d)) {
+          bits.push({ status: 'break', title: ev.title })
+          continue
+        }
+        if (!occursOn(ev, d)) continue
+        const mark = ev.attendance?.[ymd(d)]
+        const status: HeatStatus = mark ?? (endOn(ev, d) <= now ? 'unmarked' : 'upcoming')
+        bits.push({ status, title: ev.title })
+      }
+      // Ưu tiên hiển thị: vắng > chưa ghi nhận > có mặt > sắp tới > nghỉ
+      const order: HeatStatus[] = ['absent', 'unmarked', 'present', 'upcoming', 'break']
+      const status = bits.length ? order.find((s) => bits.some((b) => b.status === s)) ?? null : null
+      col.push({ date: d, status: d < today && !bits.length ? null : status, tip: bits.map((b) => b.title).join(', ') })
+    }
+    out.push(col)
+  }
+  return out
+}
+
+export interface WeekHours {
+  monday: Date
+  hours: number
+  attendedHours: number
+  current: boolean
+  future: boolean
+}
+
+/** Giờ học từng tuần: `past` tuần trước, tuần này, `future` tuần sau */
+export function weeklyHours(data: AppData, now: Date = new Date(), past = 7, future = 4): WeekHours[] {
+  const mon = mondayOf(now)
+  const out: WeekHours[] = []
+  for (let k = -past; k <= future; k++) {
+    const m = addD(mon, k * 7)
+    const l = weekLoad(data, m)
+    out.push({ monday: m, hours: Math.round((l.minutes / 60) * 10) / 10, attendedHours: Math.round((l.attendedMinutes / 60) * 10) / 10, current: k === 0, future: k > 0 })
+  }
+  return out
+}
+
+export interface RecentRow {
+  ev: ClassEvent
+  session: SessionInfo
+}
+
+/** Các buổi đã qua hoặc đang diễn ra, mới nhất trước */
+export function recentSessions(data: AppData, now: Date = new Date(), limit = 6): RecentRow[] {
+  const rows: RecentRow[] = []
+  for (const ev of data.events) {
+    for (const s of listSessions(ev, now)) {
+      if (s.status !== 'upcoming') rows.push({ ev, session: s })
+    }
+  }
+  return rows.sort((a, b) => b.session.date.getTime() - a.session.date.getTime() || b.ev.time.localeCompare(a.ev.time)).slice(0, limit)
+}
