@@ -12,6 +12,11 @@ extraResources:
 win:
   target:
     - nsis
+  # Tên file cài chỉ dùng chữ không dấu để tránh lỗi ở một số máy
+  artifactName: LichHoc-Setup-${version}.${ext}
+  # Không ký và không chỉnh icon/thông tin file .exe. Bước đó cần quyền tạo symlink của Windows
+  # (Developer Mode hoặc chạy bằng quyền Admin). Bật lại khi đã có icon và chứng chỉ ký.
+  signAndEditExecutable: false
 nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true
