@@ -72,7 +72,7 @@ export default function CoursesPage({ data, onEdit, onAdd }: Props): React.JSX.E
                   {st && total > 0 && (
                     <div className="mt-2.5 flex items-center gap-2">
                       <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-hover">
-                        <div className="h-full rounded-full" style={{ width: `${pct}%`, background: e.color }} />
+                        <div className="h-full rounded-full" style={{ width: `${pct}%`, background: `color-mix(in srgb, ${e.color} 60%, var(--c-ink))` }} />
                       </div>
                       <span className="text-xs font-medium text-muted">{t('dash.progress', { done: st.past, total })}</span>
                     </div>

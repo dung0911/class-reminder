@@ -67,7 +67,11 @@ export default function TasksPage({ data, update, onToast }: Props): React.JSX.E
         <div className="min-w-0 flex-1">
           <div className={`font-medium ${x.done ? 'text-muted line-through' : ''}`}>{x.title}</div>
           <div className="flex flex-wrap gap-x-3 text-xs text-muted">
-            {cls && <span style={{ color: cls.color }}>● {cls.title}</span>}
+            {cls && (
+              <span>
+                <span style={{ color: cls.color }}>●</span> {cls.title}
+              </span>
+            )}
             {x.due && (
               <span className={late ? 'font-semibold text-bad' : ''}>
                 ⏰ {fmtDue(x.due)}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { AppData, Attendance, ClassEvent, SessionNote } from '@shared/types'
 import { FIELD } from '@/lib/constants'
 import {
@@ -42,12 +42,29 @@ export default function SessionDialog({ ev, date, now, update, onEdit, onClose }
     update((d) => ({ ...d, events: d.events.map((e) => (e.id === ev.id ? fn(e) : e)) }))
   const setMark = (s: Attendance | undefined): void => patch((e) => withAttendance(e, key, s))
 
-  // Ghi chú buổi: gõ trong ô tạm, ra khỏi ô mới lưu (đỡ ghi đĩa mỗi phím)
+  // Ghi chú buổi: gõ trong ô tạm (đỡ ghi đĩa mỗi phím), tự lưu sau 0,6 giây ngừng gõ, khi rời ô,
+  // và lưu nốt khi đóng hộp thoại (kể cả bấm ra ngoài nền, lúc đó sự kiện rời ô không kịp chạy)
   const saved: SessionNote = ev.sessionNotes?.[key] ?? {}
   const [noteText, setNoteText] = useState(saved.note ?? '')
   const [recText, setRecText] = useState(saved.recordingUrl ?? '')
   const setNote = (p: Partial<SessionNote>): void =>
     patch((e) => ({ ...e, sessionNotes: { ...(e.sessionNotes ?? {}), [key]: { ...(e.sessionNotes?.[key] ?? {}), ...p } } }))
+
+  const latest = useRef({ noteText, recText, saved, setNote })
+  latest.current = { noteText, recText, saved, setNote }
+  const commitNotes = (): void => {
+    const l = latest.current
+    const note = l.noteText || undefined
+    const rec = l.recText.trim() || undefined
+    if (note !== l.saved.note || rec !== l.saved.recordingUrl) l.setNote({ note, recordingUrl: rec })
+  }
+  useEffect(() => {
+    const timer = setTimeout(commitNotes, 600)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteText, recText])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => commitNotes, [])
   const toggleBreak = (): void =>
     patch((e) => ({
       ...e,
@@ -122,7 +139,7 @@ export default function SessionDialog({ ev, date, now, update, onEdit, onClose }
               placeholder={t('session.notePh')}
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
-              onBlur={() => noteText !== (saved.note ?? '') && setNote({ note: noteText || undefined })}
+              onBlur={commitNotes}
             />
             <div className="flex gap-2">
               <input
@@ -130,7 +147,7 @@ export default function SessionDialog({ ev, date, now, update, onEdit, onClose }
                 placeholder={t('session.recordingPh')}
                 value={recText}
                 onChange={(e) => setRecText(e.target.value)}
-                onBlur={() => recText !== (saved.recordingUrl ?? '') && setNote({ recordingUrl: recText.trim() || undefined })}
+                onBlur={commitNotes}
               />
               {saved.recordingUrl && (
                 <button onClick={() => void window.api.openUrl(saved.recordingUrl as string)} className="shrink-0 rounded-lg border border-line px-3 text-sm hover:bg-hover">

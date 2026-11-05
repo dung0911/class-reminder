@@ -104,7 +104,8 @@ export default function TimeGrid({ events, days, now, onSelect, onSlot }: Props)
           <div>
             {hours.map((h) => (
               <div key={h} style={{ height: HOUR_PX }} className="pr-2 text-right text-[11px] font-medium text-muted">
-                <span className="relative -top-2">{pad(h)}:00</span>
+                {/* nhãn giờ nằm sát vạch giờ hiện tại thì ẩn đi để khỏi bị nhãn giờ hiện tại đè lên */}
+                <span className={`relative -top-2 ${nowInRange && Math.abs(yOf(h * 60) - yOf(nowMin)) < 12 ? 'invisible' : ''}`}>{pad(h)}:00</span>
               </div>
             ))}
           </div>
@@ -112,12 +113,17 @@ export default function TimeGrid({ events, days, now, onSelect, onSlot }: Props)
           {days.map((d, col) => {
             const weekend = d.getDay() === 0 || d.getDay() === 6
             const today = col === todayIdx
+            // Phần đã qua: cả ngày nếu là ngày trước hôm nay, hoặc các giờ trước giờ hiện tại của hôm nay.
+            // Ô đã qua không bấm được (không thêm lớp vào quá khứ); thẻ buổi học vẫn bấm được để điểm danh.
+            const dayIsPast = ymd(d) < ymd(now)
+            const slotPast = (hour: number): boolean => dayIsPast || (today && hour < now.getHours())
+            const pastPx = dayIsPast ? hours.length * HOUR_PX : today ? Math.min(Math.max(yOf(nowMin), 0), hours.length * HOUR_PX) : 0
             const lanes = layoutLanes(itemsOf(d))
             return (
               <div
                 key={ymd(d)}
                 ref={col === 0 ? colRef : undefined}
-                className={`relative cursor-cell border-l border-line ${weekend ? 'hatch' : ''} ${today ? 'bg-accent-soft/40' : ''}`}
+                className={`relative border-l border-line ${dayIsPast ? '' : 'cursor-cell'} ${weekend ? 'hatch' : ''} ${today ? 'bg-accent-soft/40' : ''}`}
                 style={{
                   backgroundImage: `linear-gradient(var(--c-line) 1px, transparent 1px)${weekend ? ', repeating-linear-gradient(135deg, transparent 0 6px, var(--c-hatch) 6px 7px)' : ''}`,
                   backgroundSize: `100% ${HOUR_PX}px${weekend ? ', auto' : ''}`
@@ -126,15 +132,24 @@ export default function TimeGrid({ events, days, now, onSelect, onSlot }: Props)
                   if ((e.target as HTMLElement).closest('[data-evt]')) return setHover(null)
                   const y = e.clientY - e.currentTarget.getBoundingClientRect().top
                   const hour = START_H + Math.floor(y / HOUR_PX)
+                  if (slotPast(hour)) return setHover(null)
                   setHover((h) => (h && h.col === col && h.hour === hour ? h : { col, hour }))
                 }}
                 onMouseLeave={() => setHover(null)}
                 onClick={(e) => {
                   if ((e.target as HTMLElement).closest('[data-evt]')) return
                   const y = e.clientY - e.currentTarget.getBoundingClientRect().top
-                  onSlot(d, START_H + Math.floor(y / HOUR_PX), e.clientX, e.clientY)
+                  const hour = START_H + Math.floor(y / HOUR_PX)
+                  if (slotPast(hour)) return
+                  onSlot(d, hour, e.clientX, e.clientY)
                 }}
               >
+                {pastPx > 0 && (
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-0"
+                    style={{ height: pastPx, background: 'color-mix(in srgb, var(--c-muted) 9%, transparent)' }}
+                  />
+                )}
                 {hover?.col === col && (
                   <div
                     className="pointer-events-none absolute inset-x-1 flex items-center justify-center rounded-lg border border-dashed border-accent/40 bg-accent-soft/60 text-accent"
@@ -147,7 +162,7 @@ export default function TimeGrid({ events, days, now, onSelect, onSlot }: Props)
                 {lanes.map(({ item, lane, lanes: n }) => {
                   const { ev, isBreak } = item
                   const top = Math.max(0, yOf(item.start))
-                  const height = Math.max(30, (ev.duration / 60) * HOUR_PX - 3)
+                  const height = Math.max(44, (ev.duration / 60) * HOUR_PX - 3) // buổi ngắn vẫn đủ chỗ ghi giờ và tên
                   const place = {
                     top: top + 1,
                     height,

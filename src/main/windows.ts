@@ -53,6 +53,18 @@ export function showMain(): void {
   })
   loadPage(main, 'index')
 
+  // Chỉ để kiểm thử (chưa đóng gói): ép cỡ cửa sổ "WxH" và mức zoom để xem giao diện ở màn hình nhỏ/lớn
+  if (!app.isPackaged) {
+    const size = process.env['LICHHOC_SHOT_SIZE']
+    if (size) {
+      const [w, h] = size.split('x').map(Number)
+      main.setMinimumSize(100, 100)
+      main.setSize(w, h)
+    }
+    const zoom = Number(process.env['LICHHOC_SHOT_ZOOM'])
+    if (zoom) main.webContents.on('did-finish-load', () => main?.webContents.setZoomFactor(zoom))
+  }
+
   // Chỉ để kiểm thử: chụp cửa sổ chính ra file rồi thoát
   // (LICHHOC_SHOT_JS: đoạn JS chạy trước khi chụp để bấm sang trang khác; chỉ dùng khi chưa đóng gói)
   const shot = process.env['LICHHOC_SHOT_MAIN']

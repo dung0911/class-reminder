@@ -9,7 +9,9 @@ import { createTray } from './tray'
 import { showMain } from './windows'
 
 // Cố định thư mục dữ liệu (không đổi theo productName) để luôn là %APPDATA%\lich-hoc
-app.setPath('userData', join(app.getPath('appData'), 'lich-hoc'))
+// (Chỉ khi chưa đóng gói) LICHHOC_USERDATA trỏ sang thư mục khác để kiểm thử mà không đụng dữ liệu thật
+const testData = !app.isPackaged ? process.env['LICHHOC_USERDATA'] : undefined
+app.setPath('userData', testData ?? join(app.getPath('appData'), 'lich-hoc'))
 app.setAppUserModelId('com.lichhoc.app')
 
 // Mở cùng Windows thì chỉ nằm khay, không bật cửa sổ chính
@@ -29,7 +31,7 @@ if (!app.requestSingleInstanceLock()) {
     createTray()
     if (!startHidden) showMain()
     startScheduler(notifyClass)
-    startBackground()
+    if (app.isPackaged || !process.env['LICHHOC_NO_BG']) startBackground() // LICHHOC_NO_BG: tắt việc chạy nền khi kiểm thử
     // Kiểm thử: bắn thử một lần nhắc giờ với lớp đầu tiên
     if (process.argv.includes('--test-reminder')) notifyClass(loadData().events[0], new Date())
   })

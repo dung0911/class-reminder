@@ -60,10 +60,11 @@ export default function CalendarPage({ data, update, filter, onFilter, onSelect,
 
   return (
     <div className="flex h-full flex-col">
-      <header className="mb-4 flex items-end justify-between gap-4">
+      <header className="mb-3 flex items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{t(greetingKey(now.getHours()))} 👋</h1>
-          <p className="text-muted">{t('greet.sub')}</p>
+          {/* cửa sổ thấp thì bỏ dòng phụ để lịch có thêm chỗ */}
+          <p className="text-muted [@media(max-height:859px)]:hidden">{t('greet.sub')}</p>
         </div>
         <button onClick={onAdd} className="btn-accent rounded-xl px-4 py-2.5 text-sm font-semibold hover:opacity-90">
           + {t('calendar.addClass')}
@@ -75,7 +76,8 @@ export default function CalendarPage({ data, update, filter, onFilter, onSelect,
           <StatsStrip data={data} now={now} />
           {/* Lọc theo lớp (giống Tất cả / Cá nhân / Công việc) */}
           <div className="mb-3 flex items-center gap-3">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+            {/* Một hàng cuộn ngang: nhiều lớp cũng không làm hàng này cao lên và chiếm chỗ của lịch */}
+            <div className="flex min-w-0 flex-1 items-center gap-1.5 no-scrollbar overflow-x-auto *:shrink-0 *:whitespace-nowrap">
               <Chip active={filter === 'all'} onClick={() => onFilter('all')}>
                 {t('filter.all')}
               </Chip>
@@ -130,7 +132,8 @@ export default function CalendarPage({ data, update, filter, onFilter, onSelect,
           )}
         </section>
 
-        <div className="flex w-80 shrink-0 flex-col gap-4 overflow-y-auto pr-0.5">
+        {/* *:shrink-0 để các thẻ không bị co ép (cột này cuộn được thay vì nén thẻ) */}
+        <div className="flex w-72 shrink-0 flex-col gap-4 overflow-y-auto pr-0.5 *:shrink-0 min-[1280px]:w-80">
           <MiniCalendar events={data.events} anchor={anchor} now={now} view={view} onPick={setAnchor} />
           <NextClassPanel data={data} now={now} update={update} />
         </div>

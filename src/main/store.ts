@@ -1,6 +1,6 @@
 import { app } from 'electron'
 import { join, dirname } from 'path'
-import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'fs'
+import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'fs'
 import type { AppData, ClassEvent, Settings, Site } from '@shared/types'
 
 const dataFile = (): string => join(app.getPath('userData'), 'data.json')
@@ -64,12 +64,33 @@ export function saveData(data: AppData): void {
   renameSync(tmp, file) // ghi nguyên tử, tránh hỏng file nếu mất điện giữa chừng
 }
 
+const pause = (ms: number): void => void Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms)
+
 export function loadData(): AppData {
-  try {
-    return normalize(JSON.parse(readFileSync(dataFile(), 'utf8')) as Partial<AppData>)
-  } catch {
-    /* chưa có data.json */
+  // Đọc data.json. Bị khoá tạm (antivirus, đồng bộ đám mây...) thì thử lại vài lần. File có nhưng hỏng thì
+  // SAO LƯU ra data.corrupt-<giờ>.json trước, tuyệt đối không âm thầm ghi đè bằng dữ liệu mặc định.
+  for (let i = 0; i < 4; i++) {
+    try {
+      // bỏ ký tự BOM đầu file (Notepad hay thêm khi lưu UTF-8) để file sửa tay vẫn đọc được
+      return normalize(JSON.parse(readFileSync(dataFile(), 'utf8').replace(/^﻿/, '')) as Partial<AppData>)
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException).code
+      if (code === 'ENOENT') break // chưa có data.json (lần chạy đầu)
+      if (code === 'EBUSY' || code === 'EPERM' || code === 'EACCES') {
+        pause(80)
+        continue
+      }
+      try {
+        // Đặt tên theo thời điểm sửa file để một file hỏng chỉ được sao lưu đúng một lần (loadData chạy rất nhiều lần)
+        const bk = join(dirname(dataFile()), `data.corrupt-${Math.round(statSync(dataFile()).mtimeMs)}.json`)
+        if (!existsSync(bk)) copyFileSync(dataFile(), bk)
+      } catch {
+        /* không sao lưu được thì thôi */
+      }
+      return normalize({ events: [DEFAULT_EVENT] }) // dùng tạm trong bộ nhớ; chưa ghi đè file hỏng
+    }
   }
+  if (existsSync(dataFile())) return normalize({ events: [DEFAULT_EVENT] }) // file có nhưng đang bị khoá: không ghi đè
   try {
     const old = JSON.parse(readFileSync(legacyFile(), 'utf8')) as Partial<ClassEvent>[]
     if (Array.isArray(old)) {

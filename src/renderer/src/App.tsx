@@ -43,6 +43,25 @@ function Shell({ data, update }: ShellProps): React.JSX.Element {
   const now = useNow(15_000)
   const nextExam = upcomingExams(data, now)[0]
 
+  // Esc đóng hộp thoại đang mở (buổi học, thêm/sửa lớp); khung thêm nhanh tự xử lý Esc riêng
+  useEffect(() => {
+    const on = (e: KeyboardEvent): void => {
+      if (e.key !== 'Escape') return
+      setSession(null)
+      setEditing(null)
+    }
+    window.addEventListener('keydown', on)
+    return () => window.removeEventListener('keydown', on)
+  }, [])
+
+  // Cửa sổ hẹp (dưới 1100 px) thì tự thu nhỏ thanh bên để lịch còn chỗ; không đổi cài đặt của bạn
+  const [narrow, setNarrow] = useState(() => window.innerWidth < 1100)
+  useEffect(() => {
+    const on = (): void => setNarrow(window.innerWidth < 1100)
+    window.addEventListener('resize', on)
+    return () => window.removeEventListener('resize', on)
+  }, [])
+
   const showToast = (msg: string): void => {
     setToast(msg)
     setTimeout(() => setToast(''), 4000)
@@ -74,7 +93,7 @@ function Shell({ data, update }: ShellProps): React.JSX.Element {
       <div className="flex min-h-0 flex-1">
         <Sidebar
           page={page}
-          collapsed={data.settings.sidebarCollapsed}
+          collapsed={data.settings.sidebarCollapsed || narrow}
           tinted={data.settings.sidebarStyle === 'accent'}
           userName={data.accounts.find((a) => a.fullName)?.fullName ?? ''}
           classes={data.events.map((e) => ({ id: e.id, title: e.title, color: e.color }))}

@@ -201,6 +201,14 @@ textarea {
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* Cuộn được nhưng không hiện thanh cuộn (hàng nút lọc lớp) */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* thanh cuộn theo giao diện */
 ::-webkit-scrollbar {
   width: 10px;
