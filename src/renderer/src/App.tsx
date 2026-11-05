@@ -1,0 +1,126 @@
+import { useEffect, useState } from 'react'
+import type { AppData, ClassEvent } from '@shared/types'
+import { useData, useNow, useTheme } from '@/lib/useData'
+import { I18nProvider, useT } from '@/lib/i18n'
+import Sidebar, { type Page } from '@/components/Sidebar'
+import TitleBar from '@/components/TitleBar'
+import ClassDialog from '@/components/ClassDialog'
+import SessionDialog from '@/components/SessionDialog'
+import CalendarPage from '@/pages/CalendarPage'
+import CoursesPage from '@/pages/CoursesPage'
+import DashboardPage from '@/pages/DashboardPage'
+import AccountsPage from '@/pages/AccountsPage'
+import SettingsPage from '@/pages/SettingsPage'
+import TasksPage from '@/pages/TasksPage'
+import { upcomingExams } from '@shared/extras'
+
+export default function App(): React.JSX.Element | null {
+  const { data, update } = useData()
+  useTheme(data?.settings.theme ?? 'system')
+  if (!data) return null
+  return (
+    <I18nProvider lang={data.settings.lang}>
+      <Shell data={data} update={update} />
+    </I18nProvider>
+  )
+}
+
+interface ShellProps {
+  data: AppData
+  update: (fn: (d: AppData) => AppData) => void
+}
+
+function Shell({ data, update }: ShellProps): React.JSX.Element {
+  const t = useT()
+  const [page, setPage] = useState<Page>('calendar')
+  const [editing, setEditing] = useState<ClassEvent | 'new' | null>(null)
+  const [session, setSession] = useState<{ id: string; date: Date } | null>(null)
+  const [toast, setToast] = useState('')
+  const now = useNow(15_000)
+  const nextExam = upcomingExams(data, now)[0]
+
+  const showToast = (msg: string): void => {
+    setToast(msg)
+    setTimeout(() => setToast(''), 4000)
+  }
+  useEffect(() => window.api.onToast(showToast), [])
+
+  const setSettings = (patch: Partial<AppData['settings']>): void =>
+    update((d) => ({ ...d, settings: { ...d.settings, ...patch } }))
+
+  const saveEvent = (ev: ClassEvent): void =>
+    update((d) => ({
+      ...d,
+      events: d.events.some((e) => e.id === ev.id) ? d.events.map((e) => (e.id === ev.id ? ev : e)) : [...d.events, ev]
+    }))
+  const deleteEvent = (id: string): void => update((d) => ({ ...d, events: d.events.filter((e) => e.id !== id) }))
+
+  const onSelect = (ev: ClassEvent, date: Date): void => setSession({ id: ev.id, date })
+  const sessionEv = session ? data.events.find((e) => e.id === session.id) : undefined
+
+  return (
+    <div className="app-bg flex h-full flex-col">
+      <TitleBar
+        theme={data.settings.theme}
+        lang={data.settings.lang}
+        onToggleSidebar={() => setSettings({ sidebarCollapsed: !data.settings.sidebarCollapsed })}
+        onTheme={(theme) => setSettings({ theme })}
+        onLang={(lang) => setSettings({ lang })}
+      />
+      <div className="flex min-h-0 flex-1">
+        <Sidebar
+          page={page}
+          collapsed={data.settings.sidebarCollapsed}
+          exam={nextExam ? { title: nextExam.title || t('exam.default'), days: nextExam.days } : undefined}
+          openTasks={data.tasks.filter((x) => !x.done).length}
+          onPage={setPage}
+          onToggle={() => setSettings({ sidebarCollapsed: !data.settings.sidebarCollapsed })}
+        />
+        <main className="min-w-0 flex-1 overflow-hidden p-6">
+          {page === 'calendar' && <CalendarPage data={data} update={update} onSelect={onSelect} onAdd={() => setEditing('new')} />}
+          {page === 'courses' && <CoursesPage data={data} onEdit={setEditing} onAdd={() => setEditing('new')} />}
+          {page === 'tasks' && <TasksPage data={data} update={update} onToast={showToast} />}
+          {page === 'dashboard' && <DashboardPage data={data} update={update} onSelect={onSelect} />}
+          {page === 'accounts' && <AccountsPage data={data} update={update} onToast={showToast} />}
+          {page === 'settings' && <SettingsPage data={data} update={update} onToast={showToast} />}
+        </main>
+      </div>
+
+      {sessionEv && session && (
+        <SessionDialog
+          ev={sessionEv}
+          date={session.date}
+          now={now}
+          update={update}
+          onEdit={(ev) => {
+            setSession(null)
+            setEditing(ev)
+          }}
+          onClose={() => setSession(null)}
+        />
+      )}
+
+      {editing && (
+        <ClassDialog
+          initial={editing === 'new' ? null : editing}
+          sites={data.sites}
+          onSave={(ev) => {
+            saveEvent(ev)
+            setEditing(null)
+          }}
+          onDelete={(id) => {
+            deleteEvent(id)
+            setEditing(null)
+          }}
+          onClose={() => setEditing(null)}
+        />
+      )}
+
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 z-[60] -translate-x-1/2 rounded-lg bg-slate-900 px-4 py-2 text-sm text-white shadow-lg">
+          {toast}
+        </div>
+      )}
+    </div>
+  )
+}

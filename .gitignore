@@ -1,0 +1,9 @@
+node_modules/
+out/
+dist/
+*.log
+
+# Bản thử đầu tiên (0.1, JS thuần) đã được thay bằng src/; không đưa lên git
+/main.js
+/preload.js
+/renderer/

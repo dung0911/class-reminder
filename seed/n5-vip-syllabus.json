@@ -1,0 +1,734 @@
+[
+ {
+  "no": 1,
+  "lesson": "入門",
+  "koma": "",
+  "items": [
+   "Khai giảng khóa học (giới thiệu bản thân + chương trình học)",
+   "Giới thiệu về đất nước, con người Nhật Bản",
+   "Dạy chữ cái Hiragana từ hàng あ　→　な"
+  ],
+  "homework": "luyện viết bảng chữ cái hiragana"
+ },
+ {
+  "no": 2,
+  "lesson": "入門",
+  "koma": "",
+  "items": [
+   "Ôn tập bảng chữ cái",
+   "Dạy chữ cái từ hàng は　→　ん",
+   "Dạy Âm đục",
+   "Dạy 3 câu chào hỏi trong tiếng Nhật"
+  ],
+  "homework": "luyện viết bảng chữ cái - học thuộc 3 câu chảo hỏi được học + chuyển các câu chào hỏi buổi 1 & 2 từ Romaji sang hiragana"
+ },
+ {
+  "no": 3,
+  "lesson": "入門",
+  "koma": "",
+  "items": [
+   "Ôn tập bảng chữ cái",
+   "Âm ghép, trường âm, âm ngắt, cách đọc âm ん",
+   "Số đếm (từ 1-10)"
+  ],
+  "homework": "luyện tập đọc từ vựng có chứa \"Âm ghép, trường âm, âm ngắt, cách đọc âm ん\" trong slide bài giảng - học thuộc số đếm từ 1-10"
+ },
+ {
+  "no": 4,
+  "lesson": "入門",
+  "koma": "",
+  "items": [
+   "Ôn tập từ vựng về cách đọc: \"Âm ghép, trường âm, âm ngắt, cách đọc âm ん\" + số đếm",
+   "Dạy bảng chữ cái Katakana từ hàng ア→ハ",
+   "Dạy 3 câu chào hỏi trong tiếng Nhật"
+  ],
+  "homework": "luyện viết bảng chữ cái Katakana - học thuộc 3 câu chảo hỏi được học"
+ },
+ {
+  "no": 5,
+  "lesson": "入門",
+  "koma": "",
+  "items": [
+   "Ôn tập bảng chữ cái Katakana",
+   "Dạy bảng chữ cái Katakana từ hàng マ→ン",
+   "Âm đục, âm ngắt, trường âm, âm ghép",
+   "Các kiến thức về phát âm cơ bản",
+   "Dạy 3 câu chào hỏi trong tiếng Nhật"
+  ],
+  "homework": "luyện viết bảng chữ cái Katakana - nắm được kiến thức về Âm đục, âm ngắt, trường âm, âm ghép của Katakana. - học thuộc 3 câu chảo hỏi được học Sau buổi học: Làm test GV cài :\"KIỂM TRA BẢNG CHỮ CÁI N5\" (có tính điểm)"
+ },
+ {
+  "no": 6,
+  "lesson": "入門",
+  "koma": "",
+  "items": [
+   "Tổng ôn tập 2 bảng chữ cái",
+   "Chữa test BCC",
+   "Số đếm từ 11-1000 / Hướng dẫn thêm cách nói tuổi.",
+   "Nhập môn chữ Hán"
+  ],
+  "homework": "xem lại cách nói chữ số + cách nói tuổi"
+ },
+ {
+  "no": 7,
+  "lesson": "第1課 はじめまして、マイです",
+  "koma": "A",
+  "items": [
+   "Từ Vựng - 10' / Hướng dẫn phát âm - 20'",
+   "（N1は）N2です。",
+   "（N1は）N2ですか。",
+   "Nも",
+   "Hướng dẫn cách nói thời gian (giờ, phút, mấy giờ)",
+   "Chữ Hán 1.1"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 8,
+  "lesson": "第1課 はじめまして、マイです",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "N1はN2じゃないです／じゃありません。",
+   "Nはなんじからなんじまでですか。 / ～じから～じまでです。",
+   "Chữ Hán 1.1-1.3",
+   "Ôn tập Bảng chữ Cái"
+  ],
+  "homework": "(基本練習, 応用） Học viên ôn tập thêm bảng chữ cái bằng cách luyện đọc thành tiếng các bài từ vựng, số đếm."
+ },
+ {
+  "no": 9,
+  "lesson": "第1課 はじめまして、マイです",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "1.（Nは）いくらですか。 / ～円です。\" / 2.Nはなんですか。 / 3. ～ね／～よ／～よね。",
+   "Chữ Hán 1.3",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 1  (trong giáo trình)"
+ },
+ {
+  "no": 10,
+  "lesson": "第2課 プレゼントは何でしたか",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト bài 1",
+   "Từ Vựng",
+   "（N1は）N2でした",
+   "（N1は）N2じゃなかったです／じゃありませんでした",
+   "Hội thoại",
+   "Chữ Hán 2.1"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 11,
+  "lesson": "第2課 プレゼントは何でしたか",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "だれのN2ですか / N1のN2です（所有者）",
+   "なんのN2ですか / N1（内容）のN2です",
+   "どこのN2ですか / N1（製造場所）のN2です",
+   "なんのN2ですか / N1（原材料）のN2です",
+   "Chữ Hán 2.2",
+   "Game TV: VÒNG QUAY MAY MẮN (có hướng dẫn trên slide)"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 12,
+  "lesson": "第2課 プレゼントは何でしたか",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "N1（所属）のN2です",
+   "（N1は）N2でN3です",
+   "Chữ Hán 2.3",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 2 (trong giáo trình) ------------ - HV LÀM TEST GV CÀI \"CTM - N5 - TEST TỔNG HỢP (CHƯƠNG 1-2) - tính điểm"
+ },
+ {
+  "no": 13,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "CHỮA TEST TỔNG HỢP 1 (Chương 1-2)"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 14,
+  "lesson": "第3課 お仕事は忙しいですか",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト bài 2",
+   "Từ Vựng",
+   "（Nは）Aいです。",
+   "（Nは）Aいくないです。",
+   "（Nは）Aなです。",
+   "（Nは）Aなじゃないです／じゃありません。",
+   "（Nは）Ａい／Ａなですか。",
+   "Chữ Hán 3.1"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 15,
+  "lesson": "第3課 お仕事は忙しいですか",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "（Nは）Aいくて＋Aい／Aなです。",
+   "（Nは）Aなで+Aな／Aいです。",
+   "（Nは）どうですか。",
+   "～が～",
+   "Hội thoại 1:1",
+   "Chữ Hán 3.2-3.3"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 16,
+  "lesson": "第3課 お仕事は忙しいですか",
+  "koma": "C",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "（Nは）Ａいかったです / （Nは）Ａいくなかったです",
+   "（Nは）Ａなでした。 / （Nは）Ａなじゃなかったです・じゃありませんでした",
+   "ＡいＮ／ＡなＮ / （？）どんなNですか。",
+   "Chữ Hán 3.4",
+   "Game CH: BINGO KANJI (có slide)"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 17,
+  "lesson": "第3課 お仕事は忙しいですか",
+  "koma": "D",
+  "items": [
+   "Từ Vựng",
+   "N１で từ để hỏi が一番Aですか。 / （N1で）N2が一番Aです。",
+   "N１とN2と、どっち／どちらが　Aですか。 / N1（N2）のほうがAです。",
+   "N1（は）N2よりA です。",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 3 (trong giáo trình)"
+ },
+ {
+  "no": 18,
+  "lesson": "第4課 それ、何？",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト bài 3",
+   "Từ Vựng",
+   "（Nは）từ nghi vấn／N2／Aな？",
+   "（N1は）N2・Aなです / →（N1は）N2・Aな（だよ/だね/だよね）",
+   "（N1は）N2・Aなじゃないですか→　N2・Aなじゃない？ / （N1は）N2・Aなじゃないです→　N2・Aなじゃない",
+   "・　N2・Aなだった？ / N2・Aなだった。 / ・　N1はＮ2／Ａなじゃなかった。",
+   "Chữ Hán 4.1"
+  ],
+  "homework": "BTVN - 基本練習, 応用 - Học viên xem lại bảng tổng hợp \"Thể thường của câu danh từ và tính từ đuôi な\""
+ },
+ {
+  "no": 19,
+  "lesson": "第4課 それ、何？",
+  "koma": "B",
+  "items": [
+   "Từ Vựng",
+   "（N は)A い?",
+   "（Nは）Aい。",
+   "～が～→～けど～",
+   "（Nは）Aいかった。",
+   "（Nは）Aいくない。 / （Nは）Aいくなかった。",
+   "Chữ Hán 4.2, 4.3",
+   "・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 4 (trong giáo trình) - 読む練習 ---------- - HV LÀM TEST GV CÀI \"CTM - N5 - TEST TỔNG HỢP (CHƯƠNG 3-4) - tính điểm"
+ },
+ {
+  "no": 20,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "CHỮA TEST TỔNG HỢP 2 (Chương 3-4)"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 21,
+  "lesson": "第5課 銀行のとなりにあります",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト bài 4",
+   "Từ Vựng",
+   "N（は）ありますか。 / →はい、あります。 / いいえ、ありません／ないです。",
+   "N1（sự vật, địa điểm）は　N2（địa điểm）に　あります。",
+   "N1（địa điểm）に　N2（sự vật, địa điểm）が　あります。",
+   "Chữ Hán 5.1",
+   "Xem video, giới thiệu văn hóa Nhật (có slide kèm theo) / Video \"40 kiến thức thực tế về cuộc sống, đất nước, con người, văn hóa Nhật Bản\" / https://www.youtube.com/watch?v=-AE7T6NPynE"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 22,
+  "lesson": "第5課 銀行のとなりにあります",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "（Nは）いますか。 / → はい、います。 / いいえ、いないです。／いません。",
+   "N1（người, động vật）は　N2（địa điểm）に　います",
+   "N1（địa điểm）に　N2（người, động vật）が　います",
+   "Hội thoại 1:1",
+   "Chữ Hán 5.2-5.3"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 23,
+  "lesson": "第5課 銀行のとなりにあります",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "～には／にも～",
+   "N1 とN2",
+   "số lượng từ  + います／あります",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 5"
+ },
+ {
+  "no": 24,
+  "lesson": "第6課 家族とベトナムへ行きました",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト bài 5",
+   "Từ Vựng",
+   "Vます、Vました",
+   "～時に＋　V",
+   "~時間＋V",
+   "～から～まで～Vます",
+   "Vません、Vませんでした。",
+   "Chữ Hán 6.1"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 25,
+  "lesson": "第6課 家族とベトナムへ行きました",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "N（địa điểm）　へ／に　帰ります",
+   "N（địa điểm）　へ／に　行きます",
+   "N（địa điểm）　へ／に　来ます",
+   "Hội thoại",
+   "Chữ Hán 6.2-6.3"
+  ],
+  "homework": "(基本練習, 応用） ------------------- - Hv chuẩn bị cho buổi Hội thoại chủ đề buổi 27: MỘT NGÀY CỦA TÔI"
+ },
+ {
+  "no": 26,
+  "lesson": "第6課 家族とベトナムへ行きました",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "NをV / （？）なにを　Vか。",
+   "N（場所）でV / （？）どこでVか。",
+   "N（人・動物）と～V / （？）だれとVか。",
+   "N1とか　N2とか / N1や　N2など、",
+   "Chữ Hán 6.4",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 6 (trong giáo trình) ------------- - HV LÀM TEST GV CÀI \"CTM - N5 - TEST TỔNG HỢP (CHƯƠNG 5-6) - tính điểm"
+ },
+ {
+  "no": 27,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "CHỮA TEST TỔNG HỢP 3 (Chương 5-6)"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 28,
+  "lesson": "第7課 一緒に映画を見に行きませんか",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 6",
+   "Từ Vựng",
+   "どこか／だれか／なにか＋ Trợ từ ＋Vか",
+   "どこ（へ）も / だれ（と）も　　　　＋V (phủ định) / なにも",
+   "Chữ Hán 7.1",
+   "Game TV: VUA TIẾNG NHẬT (có slide)"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 29,
+  "lesson": "第7課 一緒に映画を見に行きませんか",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "Nを（số lượng từ) ください／おねがいします。",
+   "（Khoảng thời gian) に＋　(tần suất/ số lượng) ～Vます",
+   "Chữ Hán 7.2-7.3",
+   "Hội thoại"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 30,
+  "lesson": "第7課 一緒に映画を見に行きませんか",
+  "koma": "C",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "～Vませんか。 / ～Vましょう",
+   "（N1は）N2が　ほしいです。",
+   "Chữ Hán 7.4 -7.5",
+   "Hội thoại"
+  ],
+  "homework": "(基本練習, 応用） ----------- (Học viên chủ động xem lại bài từ chương 1-7 qua file tổng hợp để ôn tập trước khi làm bài giữa kỹ)"
+ },
+ {
+  "no": 31,
+  "lesson": "第7課 一緒に映画を見に行きませんか",
+  "koma": "D",
+  "items": [
+   "Từ Vựng",
+   "N1　へ／に　＋Vます／N2　に（行きます・来ます・帰ります）",
+   "N1は　N2がVますたいです。",
+   "Vます＋方",
+   "N + が + わかる (NP bổ sung, bài 20C)",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 7 (trong giáo trình) - Học viên xem lại list câu hỏi kaiwa 1:1 để ôn tập và chuẩn bị tốt cho bài test kaiwa giữa kỳ ---------------- - HV LÀM TEST GV CÀI \"CTM - N5 - TEST GIỮA KÌ (Chương 1-7) - Tính điểm"
+ },
+ {
+  "no": 32,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "1. TEST KAIWA (60')",
+   "2. CHỮA TEST GIỮA KỲ (60')"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 33,
+  "lesson": "8課 電車で行けます",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト  7",
+   "Từ Vựng",
+   "Ôn tập về từ loại (các nhóm của động từ)",
+   "・ Thể khả năng của động từ / ・（Nは）～がV（thể khả năng）",
+   "N（phương tiện, công cụ）で＋V / ？ 何で＋　Vか",
+   "Số tiền/ Khoảng thời gian＋くらいです／かかります",
+   "Chữ Hán 8.1-8.2"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 34,
+  "lesson": "8課 電車で行けます",
+  "koma": "B",
+  "items": [
+   "Từ Vựng",
+   "N1は　N2が　（好き・嫌い／上手・下手／得意・苦手）だ／です。",
+   "Số tiền/ Khoảng thời gian で＋V khả năng / ？ いくら／どのくらいで＋  Vか",
+   "～から～",
+   "Chữ Hán 8.3-8.4",
+   "Hội thoại"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 35,
+  "lesson": "8課 電車で行けます",
+  "koma": "C",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "N1は　N2が　Aです　（đặc điểm/ tính chất của N)",
+   "N1が　N2／Aです / Nが　Vます (phân biệt wa/ga)",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 8 (trong giáo trình)"
+ },
+ {
+  "no": 36,
+  "lesson": "第9課 趣味は音楽を聞くことです",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 8",
+   "Từ Vựng",
+   "・Vます　→　Vる / ・Vますか　→　Vる？",
+   "Vる＋こと／N　が　できる",
+   "Vる+ことです",
+   "Chữ Hán 9.1-9.2"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 37,
+  "lesson": "第9課 趣味は音楽を聞くことです",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ Vựng",
+   "Vません→　Vない",
+   "（一緒に）Vませんか / →（一緒に）Vない？",
+   "V (thể khả năng)ます　→ V(thể khả năng) る / V (thể khả năng) ません →  V(thể khả năng) ない",
+   "Chữ Hán 9.3 - 9.4",
+   "Hội thoại"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 38,
+  "lesson": "第9課 趣味は音楽を聞くことです",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "Vました → Vた",
+   "V (thể khả năng) ました → V (thể khả năng) た / V (thể khả năng) ませんでした → V (thể khả năng) なかった",
+   "Thể thường của động từ ở dạng 〜 Vたい",
+   "・読む練習 / ・聞く練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 9"
+ },
+ {
+  "no": 39,
+  "lesson": "第10課 新しいカフェに行こう",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 9",
+   "Từ Vựng",
+   "Vましょう → Vよう",
+   "V1る／ Nの　＋　前に、 V2",
+   "V1 た/ N の + 後で、V2",
+   "Chữ Hán 10.1-10.2"
+  ],
+  "homework": "(基本練習, 応用） ---------- - Hv chuẩn bị cho buổi Hội thoại chủ đề buổi 41: HẸN NHAU ĐI XEM PHIM"
+ },
+ {
+  "no": 40,
+  "lesson": "第10課 新しいカフェに行こう",
+  "koma": "B",
+  "items": [
+   "Từ Vựng",
+   "V1 たら、V2 / (so sánh たら、あとで -5')",
+   "V たばかりだ",
+   "V たことが あります",
+   "Chữ Hán 10.3-10.4",
+   "・聞く練習",
+   "Hướng dẫn học viên chuẩn bị kaiwa theo chủ đề"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 10 - 読む練習 (học viên xem giải thích trên khóa học online) - HV LÀM TEST GV CÀI \"CTM - N5 - TEST TỔNG HỢP (CHƯƠNG 8-10) - tính điểm"
+ },
+ {
+  "no": 41,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "CHỮA TEST TỔNG HỢP 4 (Chương 8-9-10)"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 42,
+  "lesson": "第11課 予約しなければいけません",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 10",
+   "Từ Vựng",
+   "・Thể ば (10') / ・V ば/ A い ければ 〜 (15')",
+   "Từ nghi vấn + ば, ～か。",
+   "Game chữ Hán : THÁNH GHÉP KANJI (có slide)",
+   "Chữ Hán 11. 1-11.2  (4 chữ)"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 43,
+  "lesson": "第11課 予約しなければいけません",
+  "koma": "B",
+  "items": [
+   "Từ vựng",
+   "V１なければ、V2",
+   "Vなければなりません。 / Vないといけません。",
+   "Vなきゃ、～",
+   "Vなきゃいけない",
+   "Chữ Hán 11. 3-11.4",
+   "・読む練習"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 11 - 聞く練習 (học viên xem giải thích trên khóa học online)"
+ },
+ {
+  "no": 44,
+  "lesson": "第12課 雨が降っています",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 11",
+   "Từ Vựng",
+   "・Thể て / ・V１て、V2て、…V",
+   "V1 てから V2",
+   "Chữ Hán 12.1-12.2",
+   "Game TV: SHIRITORI (có slide hướng dẫn)"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 45,
+  "lesson": "第12課 雨が降っています",
+  "koma": "B",
+  "items": [
+   "Từ Vựng",
+   "～Vている（Hành động đang diễn ra）",
+   "Nが　Vて＋います （Hiện tượng đang xảy ra trước mắt）",
+   "N が V ています （Thói quen, hành động lặp đi lặp lại）",
+   "Chữ Hán 12.3",
+   "Luyện nghe JLPT (Mondai 1)"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 46,
+  "lesson": "第12課 雨が降っています",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "Nが　Vている（Trạng thái, kết quả của hành động）",
+   "Vて＋います（Trạng thái, hành động duy trì trong thời gian dài)",
+   "N を 知っていますか。",
+   "・読む練習 / ・聞く練習 (JLPT mondai 2)"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 12 - 聞く練習 (học viên xem giải thích trên khóa học online) - HV LÀM TEST GV CÀI \"CTM - N5 - TEST TỔNG HỢP (CHƯƠNG 11+12) - tính điểm"
+ },
+ {
+  "no": 47,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "CHỮA TEST TỔNG HỢP 5 (Chương 11-12)"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 48,
+  "lesson": "第13課 第もらってもいいですか",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 12",
+   "Từ Vựng",
+   "N1 でも （N2 でも）～",
+   "V ても　いいですか。",
+   "Vても　いいです。 / Vなくても　いいです。",
+   "Chữ Hán 13.1-13.2"
+  ],
+  "homework": "(基本練習, 応用）"
+ },
+ {
+  "no": 49,
+  "lesson": "第13課 第もらってもいいですか",
+  "koma": "B",
+  "items": [
+   "Ôn tập bài cũ",
+   "Từ vựng",
+   "V て＋ください （→ Vて） / Vない＋で＋ください （→ Vない＋で ）",
+   "Vて＋くれませんか。 / Vて＋くださいませんか。 / Mở rộng: Vてくれますか　（→ Vてくれる？)",
+   "Chữ Hán 13.3-13.4",
+   "Hội thoại"
+  ],
+  "homework": "基本練習, 応用"
+ },
+ {
+  "no": 50,
+  "lesson": "第13課 第もらってもいいですか",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "N 1は/が (私に) N2 を くれる/くださる",
+   "N は/が (私に) ~ V てくれる/ V てくださる",
+   "N 1は/が N2 に N3を あげる/さしあげる",
+   "N 1は/が N2 に V てあげる",
+   "・読む練習 / ・聞く練習 (JLPT mondai 3)"
+  ],
+  "homework": "(基本練習, 応用） - 確認テスト 13 - 聞く練習 (học viên xem giải thích trên khóa học online)"
+ },
+ {
+  "no": 51,
+  "lesson": "第14課 田中さんなら、会議ですよ。",
+  "koma": "A",
+  "items": [
+   "Chữa 確認テスト 13",
+   "Từ Vựng",
+   "Vましょうか・Vようか",
+   "Nしか～ない。",
+   "N／数字＋だけ～",
+   "Chữ Hán 14.1-14.2"
+  ],
+  "homework": "基本練習, 応用 ----------- - HV LÀM TEST GV CÀI \"CTM - N5 - TEST TỔNG HỢP (CHƯƠNG 13+14)\" - Tính điểm (ko chữa) ------------ HV làm dẫn các đề thi cho 3 buổi 53,54,55 - Buổi 53 (thi cuối kỳ): Cài đề N5 - CTM - Đề thi thử số 1 - Tính điểm (hạn trc buổi 53) - Buổi 54: Cài đề N5 - CTM - Đề thi thử số 2 - Tính điểm (hạn trc buổi 55) - Buổi 55: GV cài đề quá khứ N5 JLPT 12/2021 - Tính điểm (hạn trc buổi 55) (Mục đích gv cài sớm là để hv có thêm thời gian chủ động cho việc làm bài test. Tuy nhiên vẫn có thể làm test sau khi kết thúc chương 14)"
+ },
+ {
+  "no": 52,
+  "lesson": "第14課 田中さんなら、会議ですよ。",
+  "koma": "B",
+  "items": [
+   "Từ Vựng",
+   "N（へ・に・と・で・から）は～　（話題ーchủ đề)",
+   "N1は～が／けど、N2は～ (比較ーso sánh)",
+   "Aい／Aな　＋　さ",
+   "Mệnh đề bổ nghĩa cho danh từ",
+   "Chữ Hán 14.3"
+  ],
+  "homework": "基本練習, 応用"
+ },
+ {
+  "no": 53,
+  "lesson": "第14課 田中さんなら、会議ですよ。",
+  "koma": "C",
+  "items": [
+   "Từ Vựng",
+   "N／V普通形なら",
+   "Aな／N＋なら",
+   "・読む練習 / ・聞く練習 (JLPT mondai 4)",
+   "CHIẾN LƯỢC LÀM BÀI THI"
+  ],
+  "homework": "基本練習, 応用 - 確認テスト 14 (trong giáo trình)"
+ },
+ {
+  "no": 54,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "Test kaiwa cuối kỳ (60')",
+   "Chữa ĐỀ CUỐI KỲ (60')",
+   "(Tên đề: N5 - CTM - Đề thi thử số 1)"
+  ],
+  "homework": ""
+ },
+ {
+  "no": 55,
+  "lesson": "Ôn tập & thi thử",
+  "koma": "",
+  "items": [
+   "Chữa ĐỀ JLPT",
+   "(Tên đề: N5 - CTM - Đề thi thử số 2)",
+   "Bế giảng"
+  ],
+  "homework": ""
+ }
+]

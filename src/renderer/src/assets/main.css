@@ -1,0 +1,110 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Bảng màu sáng (mặc định). Chế độ tối ghi đè ở .dark bên dưới. */
+:root {
+  --c-bg: #f3f4fb;
+  --c-bg-grad: linear-gradient(135deg, #f6f7fd 0%, #eceefb 60%, #e4e6fa 100%);
+  --c-bar: #e8eaf6;
+  --c-side: #ffffff;
+  --c-panel: #ffffff;
+  --c-line: rgba(40, 45, 110, 0.14);
+  --c-ink: #1a1c38;
+  --c-soft: #3c4070;
+  --c-muted: #6a6f9a;
+  --c-field: #f0f1fa;
+  --c-hover: rgba(70, 80, 190, 0.09);
+  --c-accent: #5558ee;
+  --c-accent-soft: rgba(85, 88, 238, 0.14);
+  --c-ok: #0f9d6b;
+  --c-bad: #dc3a4a;
+  --c-warn: #c27a06;
+}
+
+.dark {
+  --c-bg: #0b0c1a;
+  --c-bg-grad: linear-gradient(135deg, #0b0c1a 0%, #10113a 55%, #1b1458 100%);
+  --c-bar: #0b0c1a;
+  --c-side: rgba(0, 0, 0, 0.22);
+  --c-panel: rgba(255, 255, 255, 0.05);
+  --c-line: rgba(255, 255, 255, 0.1);
+  --c-ink: #eceefb;
+  --c-soft: #c3c7e6;
+  --c-muted: #8a8fb8;
+  --c-field: rgba(0, 0, 0, 0.3);
+  --c-hover: rgba(255, 255, 255, 0.08);
+  --c-accent: #6366f1;
+  --c-accent-soft: rgba(99, 102, 241, 0.22);
+  --c-ok: #34d399;
+  --c-bad: #fb7185;
+  --c-warn: #fbbf24;
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-bar: var(--c-bar);
+  --color-side: var(--c-side);
+  --color-panel: var(--c-panel);
+  --color-line: var(--c-line);
+  --color-ink: var(--c-ink);
+  --color-soft: var(--c-soft);
+  --color-muted: var(--c-muted);
+  --color-field: var(--c-field);
+  --color-hover: var(--c-hover);
+  --color-accent: var(--c-accent);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-ok: var(--c-ok);
+  --color-bad: var(--c-bad);
+  --color-warn: var(--c-warn);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Yu Gothic UI', 'Meiryo UI', system-ui, sans-serif;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+input,
+textarea {
+  user-select: text;
+}
+
+.app-bg {
+  background: var(--c-bg-grad);
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* thanh cuộn theo giao diện */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-line);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ô nhập ngày/giờ theo màu giao diện */
+.dark input[type='date'],
+.dark input[type='time'] {
+  color-scheme: dark;
+}

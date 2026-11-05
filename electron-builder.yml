@@ -1,0 +1,23 @@
+appId: com.lichhoc.app
+productName: Lịch học
+directories:
+  output: dist
+files:
+  - out/**/*
+  - package.json
+# File ngôn ngữ đi kèm app nằm ở thư mục locales cạnh app (đọc lúc chạy)
+extraResources:
+  - from: resources/locales
+    to: locales
+win:
+  target:
+    - nsis
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+# Tự cập nhật qua GitHub Releases: bật khi đã có repo
+# publish:
+#   provider: github
+#   owner: <tên-github>
+#   repo: lich-hoc
